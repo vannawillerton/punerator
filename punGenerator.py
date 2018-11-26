@@ -39,11 +39,6 @@ def possiblePuns(word, phrase):
 	return punsList
 
 
-
-
-
-
-
 #modified version of implementation at https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python
 def levenshteinDistance(word1, word2):
     if len(word1) < len(word2):
