@@ -28,11 +28,13 @@ def getRelBasic(word):
 
 	return relatedWords	
 
-#print getRelBasic('good')
+#print getRelBasic('fish')
 
 
 '''
-** Find way to add words if there aren't enough in hypo/hypernyms - like get hypers and hypos of related words.
+** Find way to add words if there aren't enough in hypo/hypernyms?? - like get hypers and hypos of related words.
+
+** This v is perhaps not ideal but it works now
 '''
 
 def getRelated(word):
@@ -51,33 +53,28 @@ def getRelated(word):
 				relatedWords[w.lower()] = ss
 
 	#3 cut list down if too long. Keep most similar words (using path sim)
-## FIX THIS SO SCORE DICT CORRESPONDS WITH TOPSCORING
-	if len(relatedWords.keys()) > 10:
-		score = {}
-		topScoring = {}
-		for ss in relatedWords.values():
-			w = ss.name().partition('.')[0]
-			scoretmp = wordSS[0].path_similarity(ss)
-			score[scoretmp] = ss 
-		## MAYBE SPLIT HERE. LIKE GET ALL SCORES AND THEN CONTINUE ON
-		#while len(topScoring) < 15:
-			#topScoring[ss] = something
- 			if (len(topScoring) < 10):
-				topScoring[ss] = w.lower()
-			else:
-				minScore = min(score.keys())
-				if scoretmp > minScore:
-					topScoring[score[minScore]] = w.lower()
-					topScoring[score[scoretmp]] = topScoring[score[minScore]]
-					del topScoring[score[minScore]]
+	if len(relatedWords) > 10:
+		scores = []
+		scoredWords = {}
+		out = []
+		for key in relatedWords:
+			score = wordSS[0].path_similarity(relatedWords[key])
+			scores.append(score)
+			scoredWords[key] = score 
+		scores.sort()
 		
+		for value in scores:
+			for key in scoredWords:
+				if (len(out) < 15) and (scoredWords[key] == value) and (key not in out):
+					out.append(key)
+
 		for ss in wordSS:
 			for w in ss.lemma_names():
-				if (w.lower() not in topScoring.values()) and ('_' not in w):
-					topScoring[ss] = w.lower()
-
-		return topScoring.values()
-		
+				if (len(out) < 25) and (w.lower() not in out) and ('_' not in w):
+					out.append(w.lower())
+	
+		return out
+	
 
 	#4 add in lemma names (these are good ones)
 	for ss in wordSS:
@@ -87,8 +84,8 @@ def getRelated(word):
 
 	return relatedWords.keys()
 
-print getRelated('good')
 
+#print getRelated('fish')
 
 
 
