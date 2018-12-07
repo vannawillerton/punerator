@@ -1,4 +1,6 @@
 import csv
+from nltk import corpus
+#import python-Levenshtein
 #import nltk.corpus.cmudict
 #from syllabify import syllabify
 
@@ -8,35 +10,11 @@ import csv
 
 #takes a word and returns a list of transcribed syllables
 def transcribe(word):
-	print('PLACEHOLDER')
-
-def possiblePuns(word, phrase):
-	punsList = []
-	for syllable in phrase:
-		if syllable == word[0]:
-			dummyPun = []
-			i = 0
-			wordInserted = False
-			for syllCount in range(len(phrase)):
-				inBounds = True
-				if (phrase[syllCount] == word[i]) and not wordInserted:
-					while phrase[syllCount] == word[i] and inBounds:
-						dummyPun.append(phrase[syllCount])
-						print(dummyPun)
-						if (i == len(word) - 1) or (syllCount == len(phrase) - 1):
-							inBounds = False
-						else:
-							i += 1
-							syllCount += 1
-					for j in range (i, len(word)):
-						dummyPun.append(word[i])
-						print(dummyPun)
-					wordInserted = True
-				else:
-					dummyPun.append(phrase[syllCount])
-					print(dummyPun)
-			punsList.append(dummyPun)
-	return punsList
+	cmuDict = nltk.corpus.cmudict.dict()
+	try:
+		return cmuDict[word][0]
+	except Exception as e:
+		print(e)
 
 
 #modified version of implementation at https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python
@@ -61,8 +39,67 @@ def levenshteinDistance(word1, word2):
     return previous_row[-1]
 
 
+'''
+Tries to insert the whole word into a phrase. 
+Matches as much of the word to given phrase as possible, for example:
+"tiffany" + "kneecap" => "tiffa-kneecap", but
+"avenue" + "avalanche" => "avalanche-nue"
+'''
+def wholeWordInsert(word, phrase):
+	punsList = []
+	punBase = []
+	dummyPun = []
+	i = 0
+	while(i < len(phrase)):
+		if phrase[i] == word[0]:
+			dummyPun = punBase[:]
+			j = 0
+			while (j < len(word)):
+				if i < len(phrase):
+					if phrase[i] == word[j]:
+						dummyPun.append(phrase[i])
+						punBase.append(phrase[i])
+						i +=1
+						j +=1
+					else:
 
-#Opens the CMU Dictionary and just maps all the orthographies to their transcriptions
-#This doesn't handle words for which the dictionary has multiple pronunciations
-#cmudict = nltk.corpus.cmudict.dict()
-print(possiblePuns(['gruh', 'fi', 'ti'], ['por', 'naw', 'gruh', 'fi']))
+						dummyPun += word[j:]
+						dummyPun += phrase[i:]
+						j = len(word) + 1
+				else:
+					dummyPun += word[j:]
+					j = len(word) + 1
+			punsList.append(dummyPun)
+		if (i < len(phrase)):
+			punBase.append(phrase[i])
+		i += 1
+	return punsList
+
+'''
+Inserts the first syllable of word somewhere into phrase 
+if the levenshtein distance is <= 2 and >0
+"womb" + "room on fire" => "womb on fire"
+"bark" + "parking lot" => "barking lot"
+etc.
+'''
+def firstSyllableInsert(word, phrase):
+	insertions = []
+	for i in range(len(phrase)):
+		if levenshteinDistance(word[0], phrase[i]) <= 2 and levenshteinDistance(word[0], phrase[i]) > 0:
+			dummyPhrase = phrase[:]
+			dummyPhrase[i] = word[0]
+			insertions.append(dummyPhrase)
+
+	return insertions
+
+def possiblePuns(word, phrase):
+	puns = []
+	for pun in firstSyllableInsert(word, phrase):
+		puns.append(pun)
+	for pun in wholeWordInsert(word, phrase):
+		puns.append(pun)
+	return puns
+
+
+
+print(possiblePuns(['frai', 'dei'], ['trai', 'dhe', 'frai', 'er']))
