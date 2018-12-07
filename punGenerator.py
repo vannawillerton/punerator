@@ -1,5 +1,9 @@
 import csv
-from nltk import corpus
+import nltk
+#import getPhonScores
+#import getRelated
+from syllabify import syllabify
+
 #import python-Levenshtein
 #import nltk.corpus.cmudict
 #from syllabify import syllabify
@@ -10,11 +14,22 @@ from nltk import corpus
 
 #takes a word and returns a list of transcribed syllables
 def transcribe(word):
+	transcription = []
 	cmuDict = nltk.corpus.cmudict.dict()
 	try:
-		return cmuDict[word][0]
+		syllabified =  syllabify(cmuDict[word][0])
+		for syllable in syllabified:
+			dummyStr = ""
+			for segment in syllable[0]:
+				dummyStr += segment + " "
+			for segment in syllable[1]:
+				dummyStr += segment + " "
+			for segment in syllable[2]:
+				dummyStr += segment + " "
+			transcription.append(dummyStr.strip())
+		return transcription
 	except Exception as e:
-		print(e)
+		return "NOT IN DICTIONARY"
 
 
 #modified version of implementation at https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python
@@ -101,5 +116,24 @@ def possiblePuns(word, phrase):
 	return puns
 
 
+The big one.
+Phrase and topic are strings
 
-print(possiblePuns(['frai', 'dei'], ['trai', 'dhe', 'frai', 'er']))
+def generatePuns(phrase, topic):
+	relatedWords = getRelated(topic)
+	relatedWordsArpa = []
+	phraseArpa = []
+
+	for word in relatedWords:
+		relatedWordsArpa.append(transcribe(word))
+
+	for word in phrase.split():
+		phraseArpa.append(transcribe(word))
+
+
+	possiblePuns = []
+	for word in relatedWords:
+		possiblePuns.append(possiblePuns(word, phrase))
+
+
+print(transcribe("bagels"))
