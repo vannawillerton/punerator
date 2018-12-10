@@ -20,7 +20,7 @@
 The purpose of this project was to create a pun generator which takes as input a sentence to modify with puns and a topic of discussion. The topic word is used to find related and similar words with which to modify the given sentence, thus producing themed puns. \\
 
 \textit{Example}\\
-Input Topic: [***] \\
+Input Topic: [***include a real output once it's working] \\
 Input Sentence: [***] \\
 Generated Output: [***] \\
 
@@ -30,7 +30,10 @@ The task for our pun generation is to modify or substitute words from the input 
 3. \\
 
 [*** Using human evaluators, we found that PunBasic generates puns which are in general as good as/worse than/better than human generated puns.]
+
 \section{Methods}
+
+[*** More detailed explanation of the methods, following structure presented in the introduction.]
 
 \section{Evaluation}
 
@@ -65,12 +68,20 @@ The human evaluators were given a page describing the setup of the task, and the
   \begin{tabular}{|P{7cm}|P{7cm}|}
     \hline
     Human Generated         & PunBaisc              \\ \hline
-    \textit{Topic:} Jokes   & \textit{Topic:} Jokes \\
-    \textit{Output:} Italy is my favorite \textbf{pun}try; in fact, I plan to spend two weeks there next year. & \textit{Output:} Italy is my favorite country; in fact, I \textbf{prank} to spend two weeks there next year. \\
+    \textit{Topic:} Animals   & \textit{Topic:} Animals \\
+    \textit{Output:} \textbf{bear} was no \textbf{mice} cream in the freezer, nor did they have \textbf{monkey} to go to the store. & \textit{Output:} There was no ice cream in the freezer, nor did they have money to go to the store. \\
     score 1: 3/5            & score 1: 2/5\\
     score 2: 2/5            & score 2: 2/5          \\ \hline
     \textit{Topic:} Cooking   & \textit{Topic:} Cooking \\
-    \textit{Output:} Malls are \textbf{grate} places to shop; I can find everything I \textbf{feed} under one roof. & \textit{Output:} Malls are great places to \textbf{chop}; I \textbf{can} find everything I need under one roof. \\
+    \textit{Output:} Malls are \textbf{grate} places to shop; I can find everything I \textbf{knead} under one roof. & \textit{Output:} Malls are great places to \textbf{chop}; I \textbf{can} find everything I need under one roof. \\
+    score 1: 4/5            & score 1: 2/5\\
+    score 2: 2/5            & score 2: 1/5          \\ \hline
+    \textit{Topic:} Travel   & \textit{Topic:} Travel \\
+    \textit{Output:} She did not cheat on the test, for it was not the \textbf{fligh} thing to do. & \textit{Output:} She did not cheat on the test, for it was not the right thing to do. \\
+    score 1: 4/5            & score 1: 2/5\\
+    score 2: 2/5            & score 2: 1/5          \\ \hline
+    \textit{Topic:} Fish  & \textit{Topic:} Fish \\
+    \textit{Output:} It was then the harmless \textbf{clam} met serious back\textbf{splash}. & \textit{Output:} It was then the harmless claim met serious backlash. \\
     score 1: 4/5            & score 1: 2/5\\
     score 2: 2/5            & score 2: 1/5          \\ \hline
   \end{tabular}
