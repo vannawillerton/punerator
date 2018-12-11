@@ -1,26 +1,36 @@
-%This Draft is not in the right format but it's easier to deal with so we can add to this one 
-%and I will copy text into the correctly formatted one. 
-
-
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage[margin=1.0in]{geometry}
+\documentclass[11pt,letterpaper]{article}
+\usepackage{naaclhlt2016}
+\usepackage{times}
+\usepackage{latexsym}
 \usepackage{array}
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 
-\title{COMP550 Final Project Report}
-\author{Greg Theos & Vanna Willerton}
+\naaclfinalcopy
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+\title{PunBasic: COMP550 Final Project Report}
+
+\author{Greg Theos\\
+    McGill University\\
+	  \And
+	Vanna Willerton\\
+	McGill University\\}
+
 \date{Fall 2018}
 
 \begin{document}
 \maketitle
+
+\begin{abstract}
+ [***]
+\end{abstract}
 
 \section{Introduction}
 
 The purpose of this project was to create a pun generator which takes as input a sentence to modify with puns and a topic of discussion. The topic word is used to find related and similar words with which to modify the given sentence, thus producing themed puns. \\
 
 \textit{Example}\\
-Input Topic: [***include a real output once it's working] \\
+Input Topic: [***] \\
 Input Sentence: [***] \\
 Generated Output: [***] \\
 
@@ -37,37 +47,42 @@ The task for our pun generation is to modify or substitute words from the input 
 
 \section{Evaluation}
 
-Evaluation of the generator was very difficult for several reasons. To help demonstrate why, here are some questions we should ask ourselves during this evaluation: \\
+Evaluation of the generator was very difficult for several reasons. To help demonstrate why, here are some questions we should ask ourselves during this evaluation: 
 1. How to determine what constitutes a \textit{good} pun? Is it humor, cleverness, originality, etc? Should an evaluation of a pun be based on one or more of these?\\
 2. Is the goodness of a joke based entirely on its own merit or can/should it be evaluated in comparison with others?\\
 3. How do we account for subjectivity of evaluation? One possible problem to take into account is that some people might have generally high standards for jokes and would therefore find most puns overall less funny than another human evaluator.\\
-4. Should this be evaluated by humans or using some statistical measure?\\
-
-We decided on an evaluation method which asks multiple human evaluators to compare our computer generated puns against a set of puns made by a human participant on the same inputs.\footnote{Acknowledge your Gold Standard human} This task for creating puns is certainly more contrived than when they are generated in the wild, but it was necessary to get a human gold standard against which to compare the PunBasic output. The exact details of this evaluation are presented in the Appendix.\\
-
-There were multiple reasons for choosing this measure and for believing that it does provide a good evaluation. First, with this measure we avoid the problem of having to decide on specific factors which constitute the goodness of a pun. Second, this method implicitly controls for the subjectivity of evaluators described in 3 by taking into account only each human evaluator's preference for human or machine generated output for each pun. The human generated puns can be viewed as a gold standard or a baseline. Regardless, it is a way for us to determine if PunBasic could generate puns which people in general found worse than, about as good as, or better than human generated puns.
+4. Should this be evaluated by humans or using some statistical measure?
+We decided on an evaluation method which asks multiple human evaluators to compare our computer generated puns against a set of puns made by a human participant on the same inputs. This task for creating puns is certainly more contrived than when they are generated in the wild, but it was necessary to get a human gold standard against which to compare the PunBasic output. The exact details of this evaluation are presented in the Appendix.
+There were multiple reasons for choosing this measure and for believing that it does provide a good evaluation. First, with this measure we avoid the problem of having to decide on specific factors which constitute the goodness of a pun. Second, this method implicitly controls for the subjectivity of evaluators described in 3 by taking into account only each human evaluator's preference for human or machine generated output for each pun. The human generated puns can be viewed as a gold standard or a baseline. Regardless, it is a way for us to determine if PunBasic could generate puns which people in general found worse than, about as good as, or better than human generated puns.\\
 
 [*** Results of evaluation]
 
 \section{Discussion}
 
-[***successes and limitations, how we could do better]
+\subsection{Successes and Limitations}
+
+\subsection{Future Work}
 
 \section{Conclusion}
 
 \section{Appendix}
 
-In this appendix we have included the full details on the evaluation method used.\\
+In this appendix we have included the full details on the evaluation method used.
 
-The table below shows the topics and output sentences for human generated and PunBasic puns. You can compare the scores of each human evaluator side by side for each output. The input sentences were found using an online random sentence generator, and only those of significant length were taken to provide more opportunities for substitutions. The topics were taken from an online random word generator, where only those which we deemed 'general' enough were chosen to avoid words with too few related or similar words to choose from.\\
+The table below shows the topics and output sentences for human generated and PunBasic puns. You can compare the scores of each human evaluator side by side for each output. The input sentences were found using an online random sentence generator, and only those of significant length were taken to provide more opportunities for substitutions. The topics were taken from an online random word generator, where only those which we deemed 'general' enough were chosen to avoid words with too few related or similar words to choose from.
 
-The human evaluators were given a page describing the setup of the task, and then a list in random order of the generated pun sentences including the inputs and topics. The evaluators were not told which of the puns were machine or human generated.\\ 
+The human evaluators were given a page describing the setup of the task, and then a list in random order of the generated pun sentences including the inputs and topics. The evaluators were not told which of the puns were machine or human generated.
+
 
 \begin{table}
   \centering
   \begin{tabular}{|P{7cm}|P{7cm}|}
     \hline
     Human Generated         & PunBaisc              \\ \hline
+    \textit{Topic:} Jokes   & \textit{Topic:} Jokes \\
+    \textit{Output:} Italy is my favorite \textbf{pun}try; in fact, I plan to spend two weeks there next year. & \textit{Output:} Italy is my favorite country; in fact, I plan to spend two weeks there next year. \\
+    score 1: 3/5            & score 1: 2/5\\
+    score 2: 2/5            & score 2: 2/5          \\ \hline
     \textit{Topic:} Animals   & \textit{Topic:} Animals \\
     \textit{Output:} \textbf{bear} was no \textbf{mice} cream in the freezer, nor did they have \textbf{monkey} to go to the store. & \textit{Output:} There was no ice cream in the freezer, nor did they have money to go to the store. \\
     score 1: 3/5            & score 1: 2/5\\
@@ -77,7 +92,7 @@ The human evaluators were given a page describing the setup of the task, and the
     score 1: 4/5            & score 1: 2/5\\
     score 2: 2/5            & score 2: 1/5          \\ \hline
     \textit{Topic:} Travel   & \textit{Topic:} Travel \\
-    \textit{Output:} She did not cheat on the test, for it was not the \textbf{fligh} thing to do. & \textit{Output:} She did not cheat on the test, for it was not the right thing to do. \\
+    \textit{Output:} She did not cheat on the test, for it was not the \textbf{flight} thing to do. & \textit{Output:} She did not cheat on the test, for it was not the right thing to do. \\
     score 1: 4/5            & score 1: 2/5\\
     score 2: 2/5            & score 2: 1/5          \\ \hline
     \textit{Topic:} Fish  & \textit{Topic:} Fish \\
@@ -89,5 +104,11 @@ The human evaluators were given a page describing the setup of the task, and the
   \caption{Evaluation. Left column is the human generated output, right column is the machine generated output. Below are the scores given by the human evaluators.}\label{tab1}
 \end{table}
 
-\end{document}
+\section*{Acknowledgments} 
+[*** Acknowledge evaluators and pun making humans]
 
+\bibliography{naaclhlt2016}
+\bibliographystyle{naaclhlt2016}
+
+
+\end{document}
