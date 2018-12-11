@@ -25,7 +25,7 @@ def getPhonScores(puns):
 
 def sortPuns(scoredPuns):
 
-	scores = scoredPuns.values()
+	scores = list(scoredPuns.values())
 	scores.sort()
 	sortedPuns = []
 
@@ -35,8 +35,4 @@ def sortPuns(scoredPuns):
 				sortedPuns.append(key)
 
 	return sortedPuns
-	
 
-print getPhonScores(["B N IH1 K","T EH1 S T", "R EH1 S T"])
-x = getPhonScores(["B L IH1 K","T EH1 S T", "R EH1 S T"])
-print sortPuns(x)
