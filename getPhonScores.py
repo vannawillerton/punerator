@@ -18,10 +18,11 @@ def getPhonScores(puns):
 	scoredPuns = {}
 	
 	for pun in puns:
-		scoredPuns[pun] = b.assessWord(pun)
+		words = pun.split('#')
+		del words[len(words) - 1]
+		scoredPuns[pun] = sum(b.assessWord(w.strip()) for w in words)
 
 	return scoredPuns
-
 
 def sortPuns(scoredPuns):
 

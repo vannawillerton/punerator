@@ -1,6 +1,7 @@
 import csv
 import nltk
 import getPhonScores
+import transliterate
 from getRelated import getRelBasic
 from getRelated import getRelatedGlove
 from syllabify import syllabify
@@ -135,10 +136,10 @@ def generatePuns(phrase, topic):
 		if transcription != "NOT IN DICTIONARY":
 			relatedWordsArpa.append(transcription)
 
+#testing change
 	for word in phrase.split():
 		phraseArpa += transcribe(word)
-
-
+		phraseArpa.extend("#")
 
 	punsList = []
 	for word in relatedWordsArpa:
@@ -156,6 +157,8 @@ def generatePuns(phrase, topic):
 		punsListStrings.append(punString)
 
 	punsList = getPhonScores.sortPuns(getPhonScores.getPhonScores(punsListStrings))
+
+	punsList = transliterate.transliterate(punsList, phrase)
 
 	return punsList
 
