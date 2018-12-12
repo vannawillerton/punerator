@@ -2,10 +2,10 @@
 Pun Generator Component:
 Getting list of words related to category input
 '''
-
 from __future__ import division
 from nltk.corpus import wordnet as wn
 from collections import defaultdict
+import csv
 
 def getRelBasic(word):
 	#1 Build the list of potential related sysents/words from wn
@@ -84,6 +84,12 @@ def getRelated(word):
 
 	return relatedWords.keys()
 
+def getRelatedGlove(filename, word):
+	with open(filename) as csvfile:
+		readList = list(csv.reader(csvfile, delimiter=','))
+		for row in readList:
+			if row[0] == word:
+				return row[1:]
 
 #print getRelated('fish')
 
