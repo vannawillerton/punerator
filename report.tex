@@ -30,16 +30,16 @@
 The purpose of this project was to create a pun generator which takes as input a sentence to modify with puns and a topic of discussion. The topic word is used to find related and similar words with which to modify the given sentence, thus producing themed puns. \\
 
 \textit{Example}\\
-Input Topic: [***] \\
-Input Sentence: [***] \\
-Generated Output: [***] \\
+\textit{Input Topic:} Music \\
+\textit{Input Phrase:} Knights of the round table \\
+\textit{Generated Output:} Knights of the sound table \\
 
 The task for our pun generation is to modify or substitute words from the input sentence using a given theme/topic word. PunBasic does this via the following pipeline:\\
 1. Get a list of words similar to the given topic word.\\
 2. \\
 3. \\
 
-[*** Using human evaluators, we found that PunBasic generates puns which are in general as good as/worse than/better than human generated puns.]
+Using human evaluators, we found that in general, human generated puns were better than machine generated puns. However, we found a higher variance in the judgments of machine outputs; when PunBasic scored better, it did much better, and when it scored worse, it scored significantly worse. 
 
 \section{Methods}
 
@@ -54,8 +54,7 @@ Evaluation of the generator was very difficult for several reasons. To help demo
 4. Should this be evaluated by humans or using some statistical measure?
 We decided on an evaluation method which asks multiple human evaluators to compare our computer generated puns against a set of puns made by a human participant on the same inputs. This task for creating puns is certainly more contrived than when they are generated in the wild, but it was necessary to get a human gold standard against which to compare the PunBasic output. The exact details of this evaluation are presented in the Appendix.
 There were multiple reasons for choosing this measure and for believing that it does provide a good evaluation. First, with this measure we avoid the problem of having to decide on specific factors which constitute the goodness of a pun. Second, this method implicitly controls for the subjectivity of evaluators described in 3 by taking into account only each human evaluator's preference for human or machine generated output for each pun. The human generated puns can be viewed as a gold standard or a baseline. Regardless, it is a way for us to determine if PunBasic could generate puns which people in general found worse than, about as good as, or better than human generated puns.\\
-
-[*** Results of evaluation]
+The results of our evaluation show high variance outcomes for the PunBasic output. The average score for PunBasic outputs was 2.2/5, while the human generated puns received an average score of 2.6/5. In general, the human puns for the same input scored better than PunBasic outputs, with 8 wins for the human output, 3 wins for PunBasic output, and one draw. Interestingly however, when PunBasic was scored better, on average it won by 2.7 points. Conversely, when the human output scored better, it won over the machine output by only 2 points on average.
 
 \section{Discussion}
 
@@ -80,7 +79,7 @@ The human evaluators were given a page describing the setup of the task, and the
     \hline
     Human Generated         & PunBaisc              \\ \hline
     \textit{Topic:} Jokes   & \textit{Topic:} Jokes \\
-    \textit{Output:} Italy is my favorite \textbf{pun}try; in fact, I plan to spend two weeks there next year. & \textit{Output:} \textbf{Idiot}aly is my favorite country; in fact, I plan to spend two weeks there next year. \\
+    \textit{Output:} Italy is my favorite \textbf{pun}try. & \textit{Output:} \textbf{Idiot}aly is my favorite country. \\
     score 1: 4/5            & score 1: 3/5\\
     score 2: 3/5            & score 2: 5/5          \\ \hline
     \textit{Topic:} Animals   & \textit{Topic:} Animals \\
