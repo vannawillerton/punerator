@@ -86,7 +86,7 @@ def wholeWordInsert(word, phrase):
 				else:
 					dummyPun += word[j:]
 					j = len(word) + 1
-			punsList.append(dummyPun)
+			punsList.append((dummyPun, word))
 		if (i < len(phrase)):
 			punBase.append(phrase[i])
 		i += 1
@@ -101,7 +101,7 @@ etc.
 '''
 def firstSyllableInsert(word, phrase):
 	insertions = []
-	if len(word) < 3:
+	if len(word) == 1:
 		for i in range(len(phrase)):
 			if levenshteinDistance(word[0], phrase[i]) <= 2 and levenshteinDistance(word[0], phrase[i]) > 0:
 				dummyPhrase = phrase[:]
@@ -112,12 +112,12 @@ def firstSyllableInsert(word, phrase):
 	else:
 		return []
 
-def possiblePuns(word, phrase):
+def possiblePuns(word, phrase, orthography):
 	puns = []
 	for pun in firstSyllableInsert(word, phrase):
-		puns.append(pun)
+		puns.append((pun, orthography))
 	for pun in wholeWordInsert(word, phrase):
-		puns.append(pun)
+		puns.append((pun, orthography))
 	return puns
 
 
@@ -128,14 +128,13 @@ Phrase and topic are strings
 
 def generatePuns(phrase, topic):
 	relatedWords = getRelatedGlove("closestWords10k.csv",topic)
-	print relatedWords
 	relatedWordsArpa = []
 	phraseArpa = []
 
 	for word in relatedWords:
 		transcription = transcribe(word)
 		if transcription != "NOT IN DICTIONARY":
-			relatedWordsArpa.append(transcription)
+			relatedWordsArpa.append((transcription, word))
 
 #testing change
 	for word in phrase.split():
@@ -143,24 +142,34 @@ def generatePuns(phrase, topic):
 		phraseArpa.extend("#")
 
 	punsList = []
-	for word in relatedWordsArpa:
-		dummyPunsList = possiblePuns(word, phraseArpa)
+	for wordPair in relatedWordsArpa:
+		word = wordPair [0]
+		dummyPunsList = possiblePuns(word, phraseArpa, wordPair[1])
 		for pun in dummyPunsList:
 			if pun != []:
-				punsList.append(pun)
+				punsList.append((pun, wordPair[1]))
 
 	punsListStrings = []
-	for pun in punsList:
+	punOrigins = {}
+	for punPair in punsList:
+		pun = punPair[0]
+		print(pun)
 		punString = ""
-		for syllable in pun:
+		for syllable in pun[0]:
 			punString+= syllable + " "
 		punString = punString.strip()
 		punsListStrings.append(punString)
+		punOrigins[punString] = punPair[1]
+
 
 	punsList = getPhonScores.sortPuns(getPhonScores.getPhonScores(punsListStrings))
 
-	punsList = transliterate.transliterate(punsList, phrase)
+	finalList = []
+	for pun in punsList:
+		finalList += (transliterate.transliterate([pun], phrase), punOrigins[pun])
 
-	return punsList
+	
+	return finalList
 
-print(str(generatePuns("If the Easter Bunny and the Tooth Fairy had babies would they take your teeth and leave chocolate for you", "farm")))
+print(str(generatePuns("black leather jacket", "finance")))
+
