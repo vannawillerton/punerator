@@ -128,6 +128,7 @@ Phrase and topic are strings
 
 def generatePuns(phrase, topic):
 	relatedWords = getRelatedGlove("closestWords10k.csv",topic)
+	print relatedWords
 	relatedWordsArpa = []
 	phraseArpa = []
 
@@ -162,4 +163,4 @@ def generatePuns(phrase, topic):
 
 	return punsList
 
-print(str(generatePuns("knights of the round table", "time")))
+print(str(generatePuns("If the Easter Bunny and the Tooth Fairy had babies would they take your teeth and leave chocolate for you", "farm")))

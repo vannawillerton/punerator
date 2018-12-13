@@ -20,9 +20,15 @@ def getPhonScores(puns):
 	for pun in puns:
 		words = pun.split('#')
 		del words[len(words) - 1]
-		scoredPuns[pun] = sum(b.assessWord(w.strip()) for w in words)
+		goodWords = []
+		for w in words: 
+			if "D I C T" not in w:
+				goodWords.append(w)
+		scoredPuns[pun] = sum(b.assessWord(w.strip()) for w in goodWords)
 
 	return scoredPuns
+
+
 
 def sortPuns(scoredPuns):
 
